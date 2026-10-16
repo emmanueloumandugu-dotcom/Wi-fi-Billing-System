@@ -1,0 +1,468 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | WiFi Bliss</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #F8F7FC;
+            color: #172554;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 245px;
+            padding: 28px 18px;
+            background: #172554;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .brand span {
+            color: #F472B6;
+        }
+
+        .sidebar h3 {
+            font-size: 11px;
+            color: #A5B4FC;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 25px 12px 12px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 13px 12px;
+            margin-bottom: 7px;
+            border-radius: 10px;
+            color: #E2E8F0;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: linear-gradient(135deg, #7C3AED, #9D4EDD);
+            color: white;
+        }
+
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .topbar h1 {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .topbar p {
+            color: #64748B;
+            font-size: 14px;
+        }
+
+        .admin-badge {
+            background: #F3E8FF;
+            color: #7C3AED;
+            padding: 11px 15px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .welcome {
+            padding: 28px;
+            border-radius: 18px;
+            color: white;
+            background: linear-gradient(120deg, #7C3AED, #F472B6);
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px #7C3AED25;
+        }
+
+        .welcome h2 {
+            font-size: 23px;
+            margin-bottom: 12px;
+        }
+
+        .welcome p {
+            line-height: 1.7;
+            font-size: 14px;
+            max-width: 650px;
+        }
+
+        .section-title {
+            font-size: 19px;
+            margin-bottom: 18px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px 18px;
+            border-radius: 15px;
+            border: 1px solid #E9E5F2;
+            box-shadow: 0 5px 18px #17255408;
+        }
+
+        .stat-icon {
+            width: 43px;
+            height: 43px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            background: #F3E8FF;
+            font-size: 21px;
+            margin-bottom: 17px;
+        }
+
+        .stat-card h3 {
+            font-size: 13px;
+            color: #64748B;
+            font-weight: normal;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .number {
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        .stat-card .note {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #94A3B8;
+            line-height: 1.5;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            padding: 24px;
+            background: white;
+            border: 1px solid #E9E5F2;
+            border-radius: 15px;
+        }
+
+        .panel h2 {
+            font-size: 17px;
+            margin-bottom: 20px;
+        }
+
+        .action-link {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 15px 0;
+            border-bottom: 1px solid #F1EDF7;
+            color: #172554;
+            text-decoration: none;
+        }
+
+        .action-link:last-child {
+            border-bottom: none;
+        }
+
+        .action-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            background: #FCE7F3;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .action-link strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .action-link small {
+            color: #64748B;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .status {
+            background: #FEF3C7;
+            color: #92400E;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #94A3B8;
+            font-size: 12px;
+        }
+
+        @media (max-width: 1100px) {
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .layout {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .brand {
+                margin-bottom: 20px;
+            }
+
+            .sidebar h3 {
+                margin-top: 15px;
+            }
+
+            .main {
+                padding: 20px 14px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .topbar h1 {
+                font-size: 23px;
+            }
+
+            .stats {
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 16px 12px;
+            }
+
+            .stat-card .number {
+                font-size: 23px;
+            }
+
+            .welcome {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+
+        <aside class="sidebar">
+            <div class="brand">WiFi <span>Bliss</span></div>
+
+            <h3>Main Menu</h3>
+
+            <a href="dashboard.html" class="nav-link active">
+                🏠 Dashboard
+            </a>
+
+            <a href="../pages/packages.html" class="nav-link">
+                📦 View Packages
+            </a>
+
+            <a href="../pages/voucher.html" class="nav-link">
+                🎟️ Redeem Voucher
+            </a>
+
+            <a href="../pages/payment.html" class="nav-link">
+                💳 Payment Page
+            </a>
+            ```html
+<h3>Management</h3>
+
+<a href="customers.html" class="nav-link">
+    👥 Manage Customers
+</a>
+
+<a href="payments.html" class="nav-link">
+    💰 Manage Payments
+</a>
+
+<a href="subscriptions.html" class="nav-link">
+    📶 Manage Subscriptions
+</a>
+
+<a href="packages.html" class="nav-link">
+    ⚙️ Manage Packages
+</a>
+
+<a href="vouchers.html" class="nav-link">
+    🎟️ Manage Vouchers
+</a>
+```
+
+            <h3>Website</h3>
+
+            <a href="../index.html" class="nav-link">
+                🌐 Welcome Page
+            </a>
+        </aside>
+
+        <main class="main">
+
+            <header class="topbar">
+                <div>
+                    <h1>Admin Dashboard</h1>
+                    <p>Manage your Wi-Fi billing system in one place.</p>
+                </div>
+
+                <div class="admin-badge">👤 Administrator</div>
+            </header>
+
+            <section class="welcome">
+                <h2>Welcome to WiFi Bliss! 💜</h2>
+                <p>
+                    Your Wi-Fi business management space is taking shape.
+                    From here, you will eventually manage customers,
+                    internet packages, M-Pesa payments, vouchers and
+                    active subscriptions.
+                </p>
+            </section>
+
+            <h2 class="section-title">Business Overview</h2>
+
+            <section class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <h3>Total Customers</h3>
+                    <div class="number">—</div>
+                    <p class="note">Waiting for database connection</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <h3>Total Payments</h3>
+                    <div class="number">KSh —</div>
+                    <p class="note">Verified payments will appear here</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📶</div>
+                    <h3>Active Subscriptions</h3>
+                    <div class="number">—</div>
+                    <p class="note">Waiting for network integration</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🎟️</div>
+                    <h3>Vouchers Redeemed</h3>
+                    <div class="number">—</div>
+                    <p class="note">Voucher records are not connected yet</p>
+                </div>
+
+            </section>
+
+            <section class="content-grid">
+
+                <div class="panel">
+                    <h2>Quick Access</h2>
+
+                    <a href="../pages/packages.html" class="action-link">
+                        <div class="action-icon">📦</div>
+                        <div>
+                            <strong>Internet Packages</strong>
+                            <small>View available time-based and data-based plans.</small>
+                        </div>
+                    </a>
+
+                    <a href="../pages/payment.html" class="action-link">
+                        <div class="action-icon">💳</div>
+                        <div>
+                            <strong>M-Pesa Payments</strong>
+                            <small>Open the payment page and prepare for integration.</small>
+                        </div>
+                    </a>
+
+                    <a href="../pages/voucher.html" class="action-link">
+                        <div class="action-icon">🎟️</div>
+                        <div>
+                            <strong>Voucher Management</strong>
+                            <small>Open the voucher redemption page.</small>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="panel">
+                    <h2>System Status</h2>
+
+                    <div class="status">
+                        <strong>Development mode</strong><br>
+                        This dashboard is currently a visual prototype.
+                        It does not yet contain live customer records,
+                        verified payment totals, secure administrator
+                        login or automatic internet activation.
+                    </div>
+                </div>
+
+            </section>
+
+            <footer>
+                © 2026 WiFi Bliss · Admin Dashboard
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>
+```

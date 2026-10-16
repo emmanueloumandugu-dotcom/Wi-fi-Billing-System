@@ -1,0 +1,689 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscriptions | WiFi Bliss Admin</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #0b1020;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #11182b;
+            border-bottom: 1px solid #292f4c;
+            padding: 22px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #c084fc;
+        }
+
+        header a {
+            color: #e9d5ff;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 35px 6%;
+        }
+
+        .heading {
+            margin-bottom: 28px;
+        }
+
+        .heading h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .heading p,
+        .muted {
+            color: #aab1c5;
+            line-height: 1.6;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .card,
+        .panel {
+            background: #151c31;
+            border: 1px solid #292f4c;
+            border-radius: 16px;
+            padding: 22px;
+        }
+
+        .card p {
+            color: #aab1c5;
+            margin-bottom: 12px;
+        }
+
+        .card h2 {
+            color: #d8b4fe;
+            font-size: 28px;
+        }
+
+        .panel {
+            margin-bottom: 25px;
+        }
+
+        .panel h2 {
+            font-size: 21px;
+            margin-bottom: 18px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #d8dced;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            background: #0b1020;
+            color: white;
+            border: 1px solid #363d5d;
+            border-radius: 9px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #c084fc;
+        }
+
+        button {
+            padding: 11px 16px;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.86;
+        }
+
+        .primary {
+            color: white;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+        }
+
+        .secondary {
+            color: #e9d5ff;
+            background: #30254a;
+        }
+
+        .danger {
+            color: #fda4af;
+            background: #48232d;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 950px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 14px 12px;
+            border-bottom: 1px solid #292f4c;
+        }
+
+        th {
+            color: #c084fc;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        td {
+            color: #e1e5f0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .active {
+            background: #183b32;
+            color: #86efac;
+        }
+
+        .pending {
+            background: #44361b;
+            color: #fcd34d;
+        }
+
+        .expired {
+            background: #40252e;
+            color: #fda4af;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 25px;
+            color: #aab1c5;
+        }
+
+        .notice {
+            margin-top: 16px;
+            font-size: 13px;
+            color: #c4b5fd;
+            line-height: 1.7;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #858da5;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 25px 4%;
+            }
+
+            .panel,
+            .card {
+                padding: 17px;
+            }
+
+            .heading h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">💜 WiFi Bliss</div>
+    <a href="dashboard.html">← Back to Dashboard</a>
+</header>
+
+<main>
+    <section class="heading">
+        <h1>Subscription Management 📡</h1>
+        <p>Monitor customer packages, subscription periods, and access status.</p>
+    </section>
+
+    <section class="summary">
+        <div class="card">
+            <p>Total Subscriptions</p>
+            <h2 id="totalCount">0</h2>
+        </div>
+
+        <div class="card">
+            <p>Active Subscriptions</p>
+            <h2 id="activeCount">0</h2>
+        </div>
+
+        <div class="card">
+            <p>Pending Subscriptions</p>
+            <h2 id="pendingCount">0</h2>
+        </div>
+
+        <div class="card">
+            <p>Expired Subscriptions</p>
+            <h2 id="expiredCount">0</h2>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>➕ Add a Subscription</h2>
+        <p class="muted">
+            Create a demo subscription record for a customer.
+        </p>
+
+        <form id="subscriptionForm" style="margin-top: 20px;">
+            <div class="form-grid">
+                <div>
+                    <label for="customerName">Customer Name</label>
+                    <input id="customerName" type="text"
+                           placeholder="e.g. Mary Wanjiku" required>
+                </div>
+
+                <div>
+                    <label for="phone">Phone Number</label>
+                    <input id="phone" type="tel"
+                           placeholder="0712345678"
+                           pattern="(?:07|01)[0-9]{8}"
+                           title="Enter a Kenyan mobile number starting with 07 or 01"
+                           required>
+                </div>
+
+                <div>
+                    <label for="packageName">WiFi Package</label>
+                    <input id="packageName" type="text"
+                           placeholder="e.g. 24 Hours" required>
+                </div>
+
+                <div>
+                    <label for="duration">Duration</label>
+                    <select id="duration" required>
+                        <option value="30 minutes">30 Minutes</option>
+                        <option value="1 hour">1 Hour</option>
+                        <option value="3 hours">3 Hours</option>
+                        <option value="6 hours">6 Hours</option>
+                        <option value="12 hours">12 Hours</option>
+                        <option value="24 hours" selected>24 Hours</option>
+                        <option value="3 days">3 Days</option>
+                        <option value="7 days">7 Days</option>
+                        <option value="14 days">14 Days</option>
+                        <option value="30 days">30 Days</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="startDate">Start Date and Time</label>
+                    <input id="startDate" type="datetime-local" required>
+                </div>
+
+                <div>
+                    <label for="status">Initial Status</label>
+                    <select id="status" required>
+                        <option value="Active">Active</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="primary" style="margin-top: 20px;">
+                Save Subscription
+            </button>
+        </form>
+
+        <p class="notice">
+            Demo mode: creating a subscription here does not confirm payment
+            or grant internet access. Real activation must follow verified
+            payment or valid voucher redemption.
+        </p>
+    </section>
+
+    <section class="panel">
+        <h2>📋 Subscription Records</h2>
+
+        <div class="toolbar">
+            <input type="search" id="search"
+                   placeholder="Search customer, phone or package...">
+
+            <button type="button" class="secondary" id="clearFilters">
+                Clear Filters
+            </button>
+        </div>
+
+        <div class="filters">
+            <div>
+                <label for="statusFilter">Filter by Status</label>
+                <select id="statusFilter">
+                    <option value="All">All Statuses</option>
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Expired">Expired</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Phone</th>
+                        <th>Package</th>
+                        <th>Start</th>
+                        <th>Expiry</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="subscriptionTable"></tbody>
+            </table>
+        </div>
+
+        <p class="notice">
+            Subscription data is saved in this browser only. Status and expiry
+            shown here are not connected to a real Wi-Fi router or shared database.
+        </p>
+    </section>
+</main>
+
+<footer>
+    © 2026 WiFi Bliss · Admin Panel
+</footer>
+
+<script>
+    const STORAGE_KEY = "wifiBlissAdminSubscriptions";
+    const SHARED_SUBSCRIPTIONS_KEY = "wifiBlissSubscriptions";
+
+    const form = document.getElementById("subscriptionForm");
+    const table = document.getElementById("subscriptionTable");
+    const search = document.getElementById("search");
+    const statusFilter = document.getElementById("statusFilter");
+
+    const durationMilliseconds = {
+        "30 minutes": 30 * 60 * 1000,
+        "1 hour": 60 * 60 * 1000,
+        "3 hours": 3 * 60 * 60 * 1000,
+        "6 hours": 6 * 60 * 60 * 1000,
+        "12 hours": 12 * 60 * 60 * 1000,
+        "24 hours": 24 * 60 * 60 * 1000,
+        "3 days": 3 * 24 * 60 * 60 * 1000,
+        "7 days": 7 * 24 * 60 * 60 * 1000,
+        "14 days": 14 * 24 * 60 * 60 * 1000,
+        "30 days": 30 * 24 * 60 * 60 * 1000
+    };
+
+    
+let subscriptions = [];
+
+try {
+    const savedSubscriptions =
+        localStorage.getItem(STORAGE_KEY) ??
+        localStorage.getItem(SHARED_SUBSCRIPTIONS_KEY);
+
+    subscriptions = JSON.parse(savedSubscriptions || "[]");
+
+    if (!Array.isArray(subscriptions)) {
+        subscriptions = [];
+    }
+} catch {
+    subscriptions = [];
+}
+
+
+    
+function saveSubscriptions() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(subscriptions));
+    localStorage.setItem(
+        SHARED_SUBSCRIPTIONS_KEY,
+        JSON.stringify(subscriptions)
+    );
+}
+
+
+    function formatDate(dateString) {
+        return new Date(dateString).toLocaleString("en-KE", {
+            dateStyle: "medium",
+            timeStyle: "short"
+        });
+    }
+
+    function getEffectiveStatus(subscription) {
+        if (subscription.status === "Pending") return "Pending";
+
+        if (new Date(subscription.end) <= new Date()) {
+            return "Expired";
+        }
+
+        return "Active";
+    }
+
+    function updateSummary() {
+        const statuses = subscriptions.map(getEffectiveStatus);
+
+        document.getElementById("totalCount").textContent =
+            subscriptions.length;
+
+        document.getElementById("activeCount").textContent =
+            statuses.filter(status => status === "Active").length;
+
+        document.getElementById("pendingCount").textContent =
+            statuses.filter(status => status === "Pending").length;
+
+        document.getElementById("expiredCount").textContent =
+            statuses.filter(status => status === "Expired").length;
+    }
+
+    function renderSubscriptions() {
+        const query = search.value.trim().toLowerCase();
+        const selectedStatus = statusFilter.value;
+
+        const filtered = subscriptions.filter(subscription => {
+            const matchesSearch = [
+                subscription.name,
+                subscription.phone,
+                subscription.package
+            ].some(value => value.toLowerCase().includes(query));
+
+            const matchesStatus = selectedStatus === "All" ||
+                getEffectiveStatus(subscription) === selectedStatus;
+
+            return matchesSearch && matchesStatus;
+        });
+
+        table.replaceChildren();
+
+        if (filtered.length === 0) {
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+
+            cell.colSpan = 7;
+            cell.className = "empty";
+            cell.textContent = subscriptions.length === 0
+                ? "No subscriptions recorded yet."
+                : "No subscriptions match your search or filter.";
+
+            row.appendChild(cell);
+            table.appendChild(row);
+        }
+
+        filtered.forEach(subscription => {
+            const row = document.createElement("tr");
+
+            function addCell(value) {
+                const cell = document.createElement("td");
+                cell.textContent = value;
+                row.appendChild(cell);
+                return cell;
+            }
+
+            addCell(subscription.name);
+            addCell(subscription.phone);
+            addCell(subscription.package);
+            addCell(formatDate(subscription.start));
+            addCell(formatDate(subscription.end));
+
+            const status = getEffectiveStatus(subscription);
+            const statusCell = addCell("");
+            const badge = document.createElement("span");
+
+            badge.className = "badge " +
+                (status === "Active" ? "active" :
+                 status === "Pending" ? "pending" : "expired");
+
+            badge.textContent = status;
+            statusCell.appendChild(badge);
+
+            const actionsCell = addCell("");
+            const actions = document.createElement("div");
+            actions.style.display = "flex";
+            actions.style.gap = "8px";
+
+            if (subscription.status === "Pending") {
+                const activateButton = document.createElement("button");
+                activateButton.className = "primary";
+                activateButton.textContent = "Activate";
+
+                activateButton.addEventListener("click", () => {
+                    const confirmed = confirm(
+                        "This is a demo action only. Activate this subscription record?"
+                    );
+
+                    if (!confirmed) return;
+
+                    const index = subscriptions.findIndex(
+                        item => item.id === subscription.id
+                    );
+
+                    if (index === -1) return;
+
+                    subscriptions[index].status = "Active";
+                    saveSubscriptions();
+                    renderSubscriptions();
+                });
+
+                actions.appendChild(activateButton);
+            }
+
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "danger";
+            deleteButton.textContent = "Delete";
+
+            deleteButton.addEventListener("click", () => {
+                if (!confirm("Delete this subscription record?")) return;
+
+                subscriptions = subscriptions.filter(
+                    item => item.id !== subscription.id
+                );
+
+                saveSubscriptions();
+                renderSubscriptions();
+            });
+
+            actions.appendChild(deleteButton);
+            actionsCell.appendChild(actions);
+            table.appendChild(row);
+        });
+
+        updateSummary();
+    }
+
+    function setDefaultStartDate() {
+        const now = new Date();
+        const localDate = new Date(
+            now.getTime() - now.getTimezoneOffset() * 60000
+        ).toISOString().slice(0, 16);
+
+        document.getElementById("startDate").value = localDate;
+    }
+
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+
+        const name = document.getElementById("customerName").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const packageName = document.getElementById("packageName").value.trim();
+        const duration = document.getElementById("duration").value;
+        const startInput = document.getElementById("startDate").value;
+        const status = document.getElementById("status").value;
+
+        if (!name || !packageName || !phone || !startInput) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        if (!/^(07|01)[0-9]{8}$/.test(phone)) {
+            alert("Enter a valid Kenyan phone number, e.g. 0712345678.");
+            return;
+        }
+
+        const startDate = new Date(startInput);
+
+        if (Number.isNaN(startDate.getTime())) {
+            alert("Please enter a valid start date and time.");
+            return;
+        }
+
+        const endDate = new Date(
+            startDate.getTime() + durationMilliseconds[duration]
+        );
+
+        subscriptions.push({
+            id: Date.now().toString() + Math.random().toString(16).slice(2),
+            name,
+            phone,
+            package: packageName,
+            duration,
+            start: startDate.toISOString(),
+            end: endDate.toISOString(),
+            status
+        });
+
+        saveSubscriptions();
+        form.reset();
+        setDefaultStartDate();
+        renderSubscriptions();
+
+        alert("Demo subscription saved successfully!");
+    });
+
+    search.addEventListener("input", renderSubscriptions);
+    statusFilter.addEventListener("change", renderSubscriptions);
+
+    document.getElementById("clearFilters").addEventListener("click", () => {
+        search.value = "";
+        statusFilter.value = "All";
+        renderSubscriptions();
+    });
+
+    setDefaultStartDate();
+    renderSubscriptions();
+</script>
+
+</body>
+</html>
+```

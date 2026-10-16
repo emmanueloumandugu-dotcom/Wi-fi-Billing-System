@@ -1,0 +1,196 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeem Voucher | WiFi Bliss</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            color: #FFFFFF;
+            background:
+                radial-gradient(circle at top left, #7C3AED55, transparent 40%),
+                radial-gradient(circle at bottom right, #F472B655, transparent 40%),
+                #172554;
+        }
+
+        .voucher-card {
+            width: 100%;
+            max-width: 440px;
+            padding: 35px 28px;
+            text-align: center;
+            border: 1px solid #FFFFFF30;
+            border-radius: 22px;
+            background: #FFFFFF12;
+            box-shadow: 0 15px 50px #00000035;
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            margin-bottom: 12px;
+            font-size: 30px;
+        }
+
+        h1 span {
+            color: #F472B6;
+        }
+
+        .description {
+            margin-bottom: 25px;
+            color: #E2E8F0;
+            line-height: 1.6;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 9px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 18px;
+            border: 1px solid #FFFFFF50;
+            border-radius: 12px;
+            outline: none;
+            background: #FFFFFF15;
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+
+        input::placeholder {
+            color: #CBD5E1;
+        }
+
+        input:focus {
+            border-color: #F472B6;
+            box-shadow: 0 0 12px #F472B655;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background: linear-gradient(135deg, #7C3AED, #F472B6);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px #7C3AED60;
+        }
+
+        #message {
+            margin-top: 18px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: #F9A8D4;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .note {
+            margin-top: 22px;
+            color: #CBD5E1;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="voucher-card">
+        <div class="logo">📶</div>
+
+        <h1>WiFi <span>Bliss</span></h1>
+
+        <p class="description">
+            Already have a Wi-Fi voucher?
+            Enter your voucher code below to continue.
+        </p>
+
+        <form id="voucherForm">
+            <label for="voucherCode">Voucher Code</label>
+
+            <input
+                type="text"
+                id="voucherCode"
+                name="voucherCode"
+                placeholder="Enter your voucher code"
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit">Redeem Voucher</button>
+        </form>
+
+        <p id="message" role="status" aria-live="polite"></p>
+
+        <p class="note">
+            Voucher verification and Wi-Fi activation will be connected
+            when the secure backend is ready.
+        </p>
+
+        <a class="back-link" href="../index.html">
+            ← Back to Welcome Page
+        </a>
+    </main>
+
+    <script>
+        const voucherForm = document.getElementById("voucherForm");
+        const voucherCode = document.getElementById("voucherCode");
+        const message = document.getElementById("message");
+
+        voucherForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const code = voucherCode.value.trim();
+
+            if (code.length < 4) {
+                message.style.color = "#FCA5A5";
+                message.textContent =
+                    "Please enter a voucher code with at least 4 characters.";
+                return;
+            }
+
+            message.style.color = "#FDE68A";
+            message.textContent =
+                "Your code has been entered, but voucher verification is not connected yet. No Wi-Fi access has been activated.";
+        });
+    </script>
+</body>
+</html>
+```

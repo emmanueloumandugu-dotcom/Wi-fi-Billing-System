@@ -1,0 +1,726 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments Management | WiFi Bliss</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #0b1020;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #11182b;
+            border-bottom: 1px solid #292f4c;
+            padding: 22px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #c084fc;
+        }
+
+        header a {
+            color: #e9d5ff;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 35px 6%;
+        }
+
+        .heading {
+            margin-bottom: 28px;
+        }
+
+        .heading h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .heading p,
+        .muted {
+            color: #aab1c5;
+            line-height: 1.6;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .card,
+        .panel {
+            background: #151c31;
+            border: 1px solid #292f4c;
+            border-radius: 16px;
+            padding: 22px;
+        }
+
+        .card p {
+            color: #aab1c5;
+            margin-bottom: 12px;
+        }
+
+        .card h2 {
+            color: #d8b4fe;
+            font-size: 27px;
+        }
+
+        .panel {
+            margin-bottom: 25px;
+        }
+
+        .panel h2 {
+            font-size: 21px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #d8dced;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            background: #0b1020;
+            color: white;
+            border: 1px solid #363d5d;
+            border-radius: 9px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #c084fc;
+        }
+
+        button {
+            padding: 11px 16px;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.86;
+        }
+
+        .primary {
+            color: white;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+        }
+
+        .secondary {
+            color: #e9d5ff;
+            background: #30254a;
+        }
+
+        .danger {
+            color: #fda4af;
+            background: #48232d;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .toolbar input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 950px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 14px 12px;
+            border-bottom: 1px solid #292f4c;
+        }
+
+        th {
+            color: #c084fc;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        td {
+            color: #e1e5f0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .success {
+            background: #183b32;
+            color: #86efac;
+        }
+
+        .pending {
+            background: #44361b;
+            color: #fcd34d;
+        }
+
+        .failed {
+            background: #40252e;
+            color: #fda4af;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 25px;
+            color: #aab1c5;
+        }
+
+        .notice {
+            margin-top: 16px;
+            font-size: 13px;
+            color: #c4b5fd;
+            line-height: 1.7;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #858da5;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 25px 4%;
+            }
+
+            .panel,
+            .card {
+                padding: 17px;
+            }
+
+            .heading h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">💜 WiFi Bliss</div>
+    <a href="dashboard.html">← Back to Dashboard</a>
+</header>
+
+<main>
+    <section class="heading">
+        <h1>Payments Management 💳</h1>
+        <p>Track M-Pesa payments and voucher redemptions in one place.</p>
+    </section>
+
+    <section class="summary">
+        <div class="card">
+            <p>Total Recorded Transactions</p>
+            <h2 id="totalTransactions">0</h2>
+        </div>
+
+        <div class="card">
+            <p>Successful Payments (KSh)</p>
+            <h2 id="totalRevenue">0</h2>
+        </div>
+
+        <div class="card">
+            <p>M-Pesa Transactions</p>
+            <h2 id="mpesaCount">0</h2>
+        </div>
+
+        <div class="card">
+            <p>Voucher Redemptions</p>
+            <h2 id="voucherCount">0</h2>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>➕ Record a Transaction</h2>
+        <p class="muted">
+            Use this form to add a demo record for testing the admin interface.
+        </p>
+
+        <form id="transactionForm" style="margin-top: 20px;">
+            <div class="form-grid">
+                <div>
+                    <label for="method">Payment Method</label>
+                    <select id="method" required>
+                        <option value="M-Pesa">M-Pesa</option>
+                        <option value="Voucher">Voucher</option>
+                    </select>
+                </div>
+
+               ```html
+<div>
+    <label for="customerSelect">Select Registered Customer</label>
+    <select id="customerSelect">
+        <option value="">Choose a customer (optional)</option>
+    </select>
+</div>
+
+<div>
+    <label for="customer">Customer Name</label>
+    <input id="customer" type="text"
+           placeholder="e.g. Mary Wanjiku" required>
+</div>
+```
+
+                <div>
+                    <label for="phone">Customer Phone</label>
+                    <input id="phone" type="tel"
+                           placeholder="0712345678"
+                           pattern="(?:07|01)[0-9]{8}"
+                           title="Enter a Kenyan mobile number starting with 07 or 01">
+                </div>
+
+                <div>
+                    <label for="amount">Amount (KSh)</label>
+                    <input id="amount" type="number"
+                           min="0" step="0.01"
+                           placeholder="e.g. 30" required>
+                </div>
+
+                <div>
+                    <label for="reference">Transaction / Voucher Code</label>
+                    <input id="reference" type="text"
+                           placeholder="e.g. QWX123ABC" required>
+                </div>
+
+                <div>
+                    <label for="package">WiFi Package</label>
+                    <input id="package" type="text"
+                           placeholder="e.g. 24 Hours" required>
+                </div>
+
+                <div>
+                    <label for="status">Transaction Status</label>
+                    <select id="status" required>
+                        <option value="Successful">Successful</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="primary" style="margin-top: 20px;">
+                Save Transaction
+            </button>
+        </form>
+
+        <p class="notice">
+            Demo mode: manually recording a transaction does not verify an
+            M-Pesa payment or redeem a real voucher. Never treat a manually
+            entered status as proof of payment.
+        </p>
+    </section>
+
+    <section class="panel">
+        <h2>📋 Transaction History</h2>
+
+        <div class="toolbar">
+            <input type="search" id="search"
+                   placeholder="Search customer, phone, package or reference...">
+
+            <button type="button" class="secondary" id="clearFilters">
+                Clear Filters
+            </button>
+        </div>
+
+        <div class="filters">
+            <div>
+                <label for="methodFilter">Payment Method</label>
+                <select id="methodFilter">
+                    <option value="All">All Methods</option>
+                    <option value="M-Pesa">M-Pesa</option>
+                    <option value="Voucher">Voucher</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="statusFilter">Transaction Status</label>
+                <select id="statusFilter">
+                    <option value="All">All Statuses</option>
+                    <option value="Successful">Successful</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Failed">Failed</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date Recorded</th>
+                        <th>Customer</th>
+                        <th>Phone</th>
+                        <th>Method</th>
+                        <th>Amount</th>
+                        <th>Reference</th>
+                        <th>Package</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="transactionTable"></tbody>
+            </table>
+        </div>
+
+        <p class="notice">
+            The totals below reflect records in this browser only, not verified
+            payments received by your business.
+        </p>
+    </section>
+</main>
+
+<footer>
+    © 2026 WiFi Bliss · Admin Panel
+</footer>
+
+<script>
+    const STORAGE_KEY = "wifiBlissAdminTransactions";
+
+    const form = document.getElementById("transactionForm");
+    const table = document.getElementById("transactionTable");
+    const search = document.getElementById("search");
+    const methodFilter = document.getElementById("methodFilter");
+    const statusFilter = document.getElementById("statusFilter");
+    
+const customerSelect = document.getElementById("customerSelect");
+const customerInput = document.getElementById("customer");
+const phoneInput = document.getElementById("phone");
+const packageInput = document.getElementById("package");
+
+
+    let transactions = [];
+
+    try {
+        transactions = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        if (!Array.isArray(transactions)) transactions = [];
+    } catch {
+        transactions = [];
+    }
+
+   
+function saveTransactions() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
+    localStorage.setItem(
+        "wifiBlissTransactions",
+        JSON.stringify(transactions)
+    );
+}
+
+
+    
+function loadRegisteredCustomers() {
+    if (!customerSelect) return;
+
+    let registeredCustomers = [];
+
+    try {
+        registeredCustomers = JSON.parse(
+            localStorage.getItem("wifiBlissCustomers") ||
+            localStorage.getItem("wifiBlissAdminCustomers") ||
+            "[]"
+        );
+
+        if (!Array.isArray(registeredCustomers)) {
+            registeredCustomers = [];
+        }
+    } catch {
+        registeredCustomers = [];
+    }
+    
+if (customerSelect) {
+    customerSelect.addEventListener("change", () => {
+        const selectedId = customerSelect.value;
+
+        if (!selectedId) {
+            customerInput.value = "";
+            phoneInput.value = "";
+            packageInput.value = "";
+            return;
+        }
+
+        let registeredCustomers = [];
+
+        try {
+            registeredCustomers = JSON.parse(
+                localStorage.getItem("wifiBlissCustomers") ||
+                localStorage.getItem("wifiBlissAdminCustomers") ||
+                "[]"
+            );
+
+            if (!Array.isArray(registeredCustomers)) {
+                registeredCustomers = [];
+            }
+        } catch {
+            registeredCustomers = [];
+        }
+
+        const customer = registeredCustomers.find(
+            item => String(item.id) === String(selectedId)
+        );
+
+        if (customer) {
+            customerInput.value = customer.name || "";
+            phoneInput.value = customer.phone || "";
+            packageInput.value = customer.package || "";
+        }
+    });
+}
+
+
+    customerSelect.replaceChildren();
+
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Choose a customer (optional)";
+    customerSelect.appendChild(defaultOption);
+
+    registeredCustomers.forEach(customer => {
+        const option = document.createElement("option");
+        option.value = customer.id;
+        option.textContent =
+            `${customer.name} — ${customer.phone}`;
+        customerSelect.appendChild(option);
+    });
+}
+
+    function updateSummary() {
+        const successful = transactions.filter(
+            item => item.status === "Successful"
+        );
+
+        const revenue = successful
+            .filter(item => item.method === "M-Pesa")
+            .reduce((sum, item) => sum + item.amount, 0);
+
+        document.getElementById("totalTransactions").textContent =
+            transactions.length;
+
+        document.getElementById("totalRevenue").textContent =
+            revenue.toLocaleString("en-KE", {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            });
+
+        document.getElementById("mpesaCount").textContent =
+            transactions.filter(item => item.method === "M-Pesa").length;
+
+        document.getElementById("voucherCount").textContent =
+            transactions.filter(item => item.method === "Voucher").length;
+    }
+
+    function renderTransactions() {
+        const query = search.value.trim().toLowerCase();
+        const selectedMethod = methodFilter.value;
+        const selectedStatus = statusFilter.value;
+
+        const filtered = transactions.filter(item => {
+            const matchesSearch = [
+                item.customer,
+                item.phone,
+                item.package,
+                item.reference,
+                item.method
+            ].some(value => value.toLowerCase().includes(query));
+
+            const matchesMethod =
+                selectedMethod === "All" || item.method === selectedMethod;
+
+            const matchesStatus =
+                selectedStatus === "All" || item.status === selectedStatus;
+
+            return matchesSearch && matchesMethod && matchesStatus;
+        });
+
+        table.replaceChildren();
+
+        if (filtered.length === 0) {
+            const row = document.createElement("tr");
+            const cell = document.createElement("td");
+
+            cell.colSpan = 9;
+            cell.className = "empty";
+            cell.textContent = transactions.length === 0
+                ? "No transactions recorded yet."
+                : "No transactions match your filters.";
+
+            row.appendChild(cell);
+            table.appendChild(row);
+        }
+
+        filtered.forEach(item => {
+            const row = document.createElement("tr");
+
+            function addCell(value) {
+                const cell = document.createElement("td");
+                cell.textContent = value;
+                row.appendChild(cell);
+                return cell;
+            }
+
+            addCell(item.date);
+            addCell(item.customer);
+            addCell(item.phone || "—");
+            addCell(item.method);
+            addCell("KSh " + item.amount.toLocaleString("en-KE"));
+            addCell(item.reference);
+            addCell(item.package);
+
+            const statusCell = addCell("");
+            const badge = document.createElement("span");
+            badge.className = "badge " +
+                (item.status === "Successful" ? "success" :
+                 item.status === "Pending" ? "pending" : "failed");
+            badge.textContent = item.status;
+            statusCell.appendChild(badge);
+
+            const actionCell = addCell("");
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "danger";
+            deleteButton.textContent = "Delete";
+
+            deleteButton.addEventListener("click", () => {
+                if (!confirm("Delete this demo transaction record?")) return;
+
+                transactions = transactions.filter(
+                    transaction => transaction.id !== item.id
+                );
+
+                saveTransactions();
+                renderTransactions();
+            });
+
+            actionCell.appendChild(deleteButton);
+            table.appendChild(row);
+        });
+
+        updateSummary();
+    }
+
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+
+        const method = document.getElementById("method").value;
+        const customer = document.getElementById("customer").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const amount = Number(document.getElementById("amount").value);
+        const reference = document.getElementById("reference").value.trim();
+        const packageName = document.getElementById("package").value.trim();
+        const status = document.getElementById("status").value;
+
+        if (!customer || !reference || !packageName ||
+            !Number.isFinite(amount) || amount <= 0) {
+            alert("Please enter valid customer, reference, package and amount details.");
+            return;
+        }
+
+        if (phone && !/^(07|01)[0-9]{8}$/.test(phone)) {
+            alert("Enter a valid Kenyan phone number, or leave the field blank.");
+            return;
+        }
+
+        if (transactions.some(item =>
+            item.reference.toLowerCase() === reference.toLowerCase()
+        )) {
+            alert("This reference code has already been recorded.");
+            return;
+        }
+
+        transactions.unshift({
+            id: Date.now().toString() + Math.random().toString(16).slice(2),
+            date: new Date().toLocaleString("en-KE"),
+            method,
+            customer,
+            phone,
+            amount,
+            reference,
+            package: packageName,
+            status
+        });
+
+        saveTransactions();
+        form.reset();
+        renderTransactions();
+
+        alert("Demo transaction record saved successfully!");
+    });
+
+    search.addEventListener("input", renderTransactions);
+    methodFilter.addEventListener("change", renderTransactions);
+    statusFilter.addEventListener("change", renderTransactions);
+
+    document.getElementById("clearFilters").addEventListener("click", () => {
+        search.value = "";
+        methodFilter.value = "All";
+        statusFilter.value = "All";
+        renderTransactions();
+    });
+    loadRegisteredCustomers();
+
+    renderTransactions();
+</script>
+
+</body>
+</html>
+```

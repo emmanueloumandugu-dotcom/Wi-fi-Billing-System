@@ -1,0 +1,450 @@
+
+/* =================================
+   WIFI BLISS - WELCOME PAGE
+   Colours: Purple, Pink, White, Navy
+================================= */
+
+:root {
+    --purple: #7C3AED;
+    --pink: #F472B6;
+    --white: #FFFFFF;
+    --navy: #172554;
+    --background: #0D0821;
+    --muted: #D8D3E8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--white);
+    background: var(--background);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* NAVIGATION */
+
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    padding: 25px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.brand-icon {
+    color: var(--pink);
+    font-size: 2rem;
+    transform: rotate(-45deg);
+}
+
+.brand-accent {
+    color: var(--pink);
+}
+
+.login-link {
+    padding: 10px 23px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 30px;
+    transition: 0.3s ease;
+}
+
+.login-link:hover {
+    background: var(--purple);
+    border-color: var(--purple);
+}
+
+/* WELCOME HERO */
+
+.hero {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    padding: 125px 20px 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            ellipse at 50% 40%,
+            rgba(124, 58, 237, 0.22),
+            transparent 55%
+        ),
+        linear-gradient(135deg, #100A29, #172554 65%, #100A29);
+}
+
+/* GLOWING BACKGROUND LIGHTS */
+
+.glow {
+    position: absolute;
+    z-index: -1;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.65;
+    pointer-events: none;
+    animation: drift 9s ease-in-out infinite alternate;
+}
+
+.glow-one {
+    top: 8%;
+    left: -140px;
+    background: var(--purple);
+}
+
+.glow-two {
+    right: -130px;
+    bottom: 5%;
+    background: #DB2777;
+    animation-delay: -4s;
+}
+
+/* FLOATING LIGHT PARTICLES */
+
+.particles {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, #FFFFFF 1px, transparent 2px),
+        radial-gradient(circle, #F472B6 1px, transparent 2px),
+        radial-gradient(circle, #A78BFA 1px, transparent 2px);
+    background-size: 120px 140px, 190px 180px, 240px 210px;
+    background-position: 10px 20px, 70px 90px, 150px 40px;
+    opacity: 0.35;
+    animation: sparkle 12s linear infinite;
+}
+
+/* MAIN CONTENT */
+
+.hero-content {
+    width: 100%;
+    max-width: 850px;
+    text-align: center;
+    animation: rise-in 1s ease both;
+}
+
+.eyebrow {
+    margin-bottom: 25px;
+    color: #F9A8D4;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+}
+
+/* GLOWING WIFI ORB */
+
+.wifi-orb {
+    width: 145px;
+    height: 145px;
+    margin: 0 auto 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    color: var(--white);
+    background: linear-gradient(
+        145deg,
+        rgba(124, 58, 237, 0.8),
+        rgba(244, 114, 182, 0.45)
+    );
+    box-shadow:
+        0 0 25px rgba(124, 58, 237, 0.6),
+        0 0 65px rgba(244, 114, 182, 0.25),
+        inset 0 0 25px rgba(255, 255, 255, 0.15);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.wifi-symbol {
+    width: 80px;
+    height: 80px;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.65));
+}
+
+.hero h1 {
+    margin-bottom: 22px;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    line-height: 1.12;
+    font-weight: 800;
+    letter-spacing: -2px;
+}
+
+.gradient-text {
+    display: block;
+    color: var(--pink);
+    background: linear-gradient(90deg, #C4B5FD, #F472B6, #FFFFFF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+    max-width: 620px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 1.08rem;
+    line-height: 1.9;
+}
+
+/* BUTTONS */
+
+.hero-buttons {
+    margin-top: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+}
+
+.btn {
+    min-height: 52px;
+    padding: 15px 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: 1px solid transparent;
+    border-radius: 35px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-4px);
+}
+
+.btn-primary {
+    color: var(--white);
+    background: linear-gradient(100deg, var(--purple), #A855F7);
+    box-shadow: 0 8px 28px rgba(124, 58, 237, 0.35);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 10px 35px rgba(244, 114, 182, 0.45);
+}
+
+.btn-secondary {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.btn-secondary:hover {
+    background: rgba(244, 114, 182, 0.16);
+    border-color: var(--pink);
+}
+
+/* SMALL STATUS MESSAGE */
+
+.hero-note {
+    margin-top: 30px;
+    color: #E9D5FF;
+    font-size: 0.88rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    display: inline-block;
+    border-radius: 50%;
+    background: #86EFAC;
+    box-shadow: 0 0 12px #86EFAC;
+}
+
+/* SCROLL INDICATOR */
+
+.scroll-hint {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    width: 25px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    transform: translateX(-50%);
+}
+
+.scroll-hint span {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    width: 3px;
+    height: 8px;
+    border-radius: 5px;
+    background: var(--pink);
+    animation: scroll-down 1.5s ease-in-out infinite;
+}
+
+/* FOOTER */
+
+.site-footer {
+    padding: 20px;
+    text-align: center;
+    color: #C4B5FD;
+    background: #0D0821;
+    font-size: 0.85rem;
+}
+
+.site-footer span {
+    color: var(--pink);
+}
+
+/* ANIMATIONS */
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow:
+            0 0 25px rgba(124, 58, 237, 0.6),
+            0 0 65px rgba(244, 114, 182, 0.25);
+    }
+
+    50% {
+        transform: scale(1.06);
+        box-shadow:
+            0 0 40px rgba(124, 58, 237, 0.85),
+            0 0 90px rgba(244, 114, 182, 0.5);
+    }
+}
+
+@keyframes drift {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(100px, -50px) scale(1.2);
+    }
+}
+
+@keyframes sparkle {
+    from {
+        background-position: 10px 20px, 70px 90px, 150px 40px;
+    }
+
+    to {
+        background-position: 130px -120px, -120px -90px, 390px -170px;
+    }
+}
+
+@keyframes rise-in {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scroll-down {
+    0% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+}
+
+/* MOBILE RESPONSIVENESS */
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 20px 5%;
+    }
+
+    .brand {
+        font-size: 1.2rem;
+    }
+
+    .hero {
+        padding: 115px 22px 90px;
+    }
+
+    .eyebrow {
+        font-size: 0.68rem;
+        letter-spacing: 2px;
+    }
+
+    .wifi-orb {
+        width: 120px;
+        height: 120px;
+    }
+
+    .wifi-symbol {
+        width: 68px;
+        height: 68px;
+    }
+
+    .hero h1 {
+        letter-spacing: -1px;
+    }
+
+    .hero-description {
+        font-size: 0.98rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/* ACCESSIBILITY: REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+}

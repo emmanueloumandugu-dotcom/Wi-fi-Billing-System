@@ -1,0 +1,257 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#172554">
+
+    <title>Wi-Fi Packages | WiFi Bliss</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/script.js" defer></script>
+
+    <style>
+        .packages-content {
+            width: min(1100px, 100%);
+            margin: auto;
+            padding: 50px 20px;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit, minmax(220px, 1fr)
+            );
+            gap: 22px;
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        .package-card {
+            padding: 26px;
+            border: 1px solid rgba(196, 181, 253, 0.3);
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+            transition: transform 0.25s, border-color 0.25s;
+        }
+
+        .package-card:hover {
+            transform: translateY(-6px);
+            border-color: #F472B6;
+        }
+
+        .package-label {
+            color: #F472B6;
+            font-size: 0.78rem;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+        }
+
+        .package-card h2 {
+            margin: 12px 0;
+            color: #FFFFFF;
+        }
+
+        .package-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #C4B5FD;
+            margin: 12px 0;
+        }
+
+        .package-card p {
+            line-height: 1.6;
+        }
+
+        .package-card button {
+            width: 100%;
+            margin-top: 18px;
+            cursor: pointer;
+        }
+
+        .package-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .package-tab {
+            border: 1px solid #A78BFA;
+            border-radius: 30px;
+            padding: 12px 22px;
+            color: white;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .package-tab.active {
+            background: #7C3AED;
+            border-color: #F472B6;
+        }
+
+        .package-message {
+            color: #FFFFFF;
+            margin: 25px 0;
+        }
+
+        .package-note {
+            color: #D1D5DB;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 500px) {
+            .packages-content {
+                padding: 35px 15px;
+            }
+
+            .package-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="../index.html" class="brand">
+        <span class="brand-icon">⌁</span>
+        <span>WiFi<span class="brand-accent">Bliss</span></span>
+    </a>
+
+    <a href="../index.html" class="login-link">Home</a>
+</header>
+
+<main class="hero">
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+
+    <section class="packages-content">
+
+        <p class="eyebrow">YOUR CONNECTION, YOUR CHOICE</p>
+
+        <h1>
+            Find Your Perfect
+            <span class="gradient-text">Package.</span>
+        </h1>
+
+        <p class="hero-description">
+            Whether you need a quick browse or a longer connection,
+            WiFi Bliss has a plan for you.
+        </p>
+
+        <div class="package-tabs">
+            <button class="package-tab active"
+                    onclick="showPackages('time', this)">
+                Time-Based Plans
+            </button>
+
+            <button class="package-tab"
+                    onclick="showPackages('data', this)">
+                Data-Based Plans
+            </button>
+        </div>
+
+        <div id="package-grid" class="package-grid"></div>
+
+        <p id="package-message" class="package-message">
+            Choose a package to get started.
+        </p>
+
+        <a href="voucher.html" class="btn btn-secondary">
+            Redeem a Voucher
+        </a>
+
+        <p class="package-note">
+            All packages use the same configured internet speed.
+            Prices shown are examples and can be adjusted by the
+            administrator. Data limits apply to data-based plans.
+        </p>
+
+    </section>
+</main>
+
+<footer class="site-footer">
+    <p>Made for better connections <span>♥</span></p>
+</footer>
+
+<script>
+    const packages = {
+        time: [
+            { name: "30 Minutes", price: 5, detail: "Quick browsing" },
+            { name: "1 Hour", price: 10, detail: "A short online session" },
+            { name: "3 Hours", price: 20, detail: "Extra time to browse" },
+            { name: "6 Hours", price: 25, detail: "Stay connected longer" },
+            { name: "12 Hours", price: 20, detail: "Half-day connection" },
+            { name: "24 Hours", price: 30, detail: "Connect throughout the day" },
+            { name: "3 Days", price: 60, detail: "A longer weekend plan" },
+            { name: "7 Days", price: 150, detail: "A full week online" },
+            { name: "14 Days", price: 250, detail: "Two weeks of access" },
+            { name: "30 Days", price: 500, detail: "A monthly connection" }
+        ],
+
+        data: [
+            { name: "100 MB", price: 5, detail: "For light browsing" },
+            { name: "250 MB", price: 10, detail: "Messages and browsing" },
+            { name: "500 MB", price: 20, detail: "Everyday internet use" },
+            { name: "1 GB", price: 30, detail: "More room to browse" },
+            { name: "2 GB", price: 50, detail: "For regular internet use" },
+            { name: "3 GB", price: 75, detail: "Extra data for your day" },
+            { name: "5 GB", price: 120, detail: "For heavier browsing" },
+            { name: "10 GB", price: 220, detail: "More data for your needs" },
+            { name: "20 GB", price: 400, detail: "A large data allowance" },
+            { name: "50 GB", price: 800, detail: "For high data usage" }
+        ]
+    };
+
+    function showPackages(type, button) {
+        const grid = document.getElementById("package-grid");
+        const message = document.getElementById("package-message");
+
+        document.querySelectorAll(".package-tab").forEach(tab => {
+            tab.classList.remove("active");
+        });
+
+        button.classList.add("active");
+        grid.innerHTML = "";
+
+        packages[type].forEach(plan => {
+            const card = document.createElement("article");
+            card.className = "package-card";
+
+            const label = type === "time" ? "TIME PLAN" : "DATA PLAN";
+
+            card.innerHTML = `
+                <p class="package-label">${label}</p>
+                <h2>${plan.name}</h2>
+                <p class="package-price">KSh ${plan.price}</p>
+                <p>${plan.detail}</p>
+                <button class="btn btn-primary">Choose Package →</button>
+            `;
+
+            card.querySelector("button").addEventListener("click", () => {
+    sessionStorage.setItem("selectedPackage", plan.name);
+    sessionStorage.setItem("selectedPrice", plan.price);
+    sessionStorage.setItem("selectedPackageType", type);
+
+    window.location.href = "payment.html";
+});
+
+            grid.appendChild(card);
+        });
+
+        message.textContent = "Choose a package to get started.";
+    }
+
+    showPackages("time", document.querySelector(".package-tab"));
+</script>
+
+</body>
+</html>
+```

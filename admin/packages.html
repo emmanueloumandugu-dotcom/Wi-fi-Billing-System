@@ -1,0 +1,525 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Packages | WiFi Bliss</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #F8F7FC;
+            color: #172554;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 22px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        header h2 span {
+            color: #F472B6;
+        }
+
+        header a {
+            color: #F9A8D4;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #64748B;
+            line-height: 1.6;
+        }
+
+        .form-card, .table-card {
+            background: white;
+            padding: 25px;
+            border: 1px solid #E9E5F2;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px #17255408;
+        }
+
+        h2 {
+            font-size: 19px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .field label {
+            display: block;
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .field input, .field select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #CBD5E1;
+            border-radius: 9px;
+            font-size: 15px;
+            background: white;
+            color: #172554;
+        }
+
+        .field input:focus, .field select:focus {
+            outline: 2px solid #C4B5FD;
+            border-color: #7C3AED;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+        }
+
+        button {
+            border: none;
+            border-radius: 9px;
+            padding: 12px 17px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .primary {
+            color: white;
+            background: linear-gradient(135deg, #7C3AED, #F472B6);
+        }
+
+        .secondary {
+            background: #EDE9FE;
+            color: #5B21B6;
+        }
+
+        .delete {
+            background: #FEE2E2;
+            color: #B91C1C;
+        }
+
+        .toggle {
+            background: #DCFCE7;
+            color: #166534;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #E9E5F2;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        th {
+            color: #64748B;
+            background: #FAF9FC;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .enabled {
+            color: #166534;
+            background: #DCFCE7;
+        }
+
+        .disabled {
+            color: #991B1B;
+            background: #FEE2E2;
+        }
+
+        .row-actions {
+            display: flex;
+            gap: 7px;
+        }
+
+        .row-actions button {
+            padding: 8px 10px;
+            font-size: 12px;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .notice {
+            color: #64748B;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #94A3B8;
+            font-size: 12px;
+        }
+
+        @media (max-width: 650px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-card, .table-card {
+                padding: 18px;
+            }
+
+            .heading h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h2>WiFi <span>Bliss</span></h2>
+        <a href="dashboard.html">← Back to Dashboard</a>
+    </header>
+
+    <main>
+        <section class="heading">
+            <h1>Manage Wi-Fi Packages 📦</h1>
+            <p>Add packages, update prices, and control which plans are available.</p>
+        </section>
+
+        <section class="form-card">
+            <h2 id="formTitle">Add a New Package</h2>
+
+            <form id="packageForm">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="packageName">Package Name</label>
+                        <input id="packageName" type="text"
+                               placeholder="e.g. 1 Hour" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="packagePrice">Price (KSh)</label>
+                        <input id="packagePrice" type="number"
+                               min="1" step="1" placeholder="e.g. 10" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="packageType">Package Category</label>
+                        <select id="packageType" required>
+                            <option value="Time-Based">Time-Based</option>
+                            <option value="Data-Based">Data-Based</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="packageStatus">Availability</label>
+                        <select id="packageStatus" required>
+                            <option value="Enabled">Enabled</option>
+                            <option value="Disabled">Disabled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button class="primary" type="submit" id="saveButton">
+                        Add Package
+                    </button>
+
+                    <button class="secondary" type="button"
+                            id="cancelButton" hidden>
+                        Cancel Edit
+                    </button>
+                </div>
+
+                <p id="message" role="status" aria-live="polite"></p>
+            </form>
+
+            <p class="notice">
+                Demo storage: package changes are saved in this browser only.
+                They are not yet shared with customers or other devices.
+            </p>
+        </section>
+
+        <section class="table-card">
+            <h2>Available Packages</h2>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Package</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="packageTable"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>© 2026 WiFi Bliss · Package Management</footer>
+
+    <script>
+        const storageKey = "wifiBlissAdminPackages";
+
+        const defaultPackages = [
+            { id: 1, name: "30 Minutes", price: 5, type: "Time-Based", status: "Enabled" },
+            { id: 2, name: "1 Hour", price: 10, type: "Time-Based", status: "Enabled" },
+            { id: 3, name: "3 Hours", price: 20, type: "Time-Based", status: "Enabled" },
+            { id: 4, name: "24 Hours", price: 30, type: "Time-Based", status: "Enabled" },
+            { id: 5, name: "1 GB", price: 30, type: "Data-Based", status: "Enabled" },
+            { id: 6, name: "5 GB", price: 120, type: "Data-Based", status: "Enabled" }
+        ];
+
+        let packages = loadPackages();
+        let editingId = null;
+
+        const form = document.getElementById("packageForm");
+        const nameInput = document.getElementById("packageName");
+        const priceInput = document.getElementById("packagePrice");
+        const typeInput = document.getElementById("packageType");
+        const statusInput = document.getElementById("packageStatus");
+        const table = document.getElementById("packageTable");
+        const message = document.getElementById("message");
+        const saveButton = document.getElementById("saveButton");
+        const cancelButton = document.getElementById("cancelButton");
+
+        function loadPackages() {
+            try {
+                const saved = localStorage.getItem(storageKey);
+                return saved === null ? defaultPackages : JSON.parse(saved);
+            } catch {
+                return defaultPackages.map(item => ({ ...item }));
+            }
+        }
+
+        function savePackages() {
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(packages));
+                return true;
+            } catch {
+                message.style.color = "#B91C1C";
+                message.textContent =
+                    "Could not save changes in this browser. Please check your browser settings.";
+                return false;
+            }
+        }
+
+        function renderPackages() {
+            table.replaceChildren();
+
+            if (packages.length === 0) {
+                const row = table.insertRow();
+                const cell = row.insertCell();
+                cell.colSpan = 5;
+                cell.textContent = "No packages yet. Add your first package above.";
+                return;
+            }
+
+            packages.forEach(item => {
+                const row = table.insertRow();
+
+                const nameCell = row.insertCell();
+                nameCell.textContent = item.name;
+
+                const typeCell = row.insertCell();
+                typeCell.textContent = item.type;
+
+                const priceCell = row.insertCell();
+                priceCell.textContent = "KSh " + item.price;
+
+                const statusCell = row.insertCell();
+                const badge = document.createElement("span");
+                badge.className = "status " +
+                    (item.status === "Enabled" ? "enabled" : "disabled");
+                badge.textContent = item.status;
+                statusCell.appendChild(badge);
+
+                const actionsCell = row.insertCell();
+                const actions = document.createElement("div");
+                actions.className = "row-actions";
+
+                const editButton = document.createElement("button");
+                editButton.className = "secondary";
+                editButton.textContent = "Edit";
+                editButton.addEventListener("click", () => editPackage(item.id));
+
+                const toggleButton = document.createElement("button");
+                toggleButton.className = "toggle";
+                toggleButton.textContent =
+                    item.status === "Enabled" ? "Disable" : "Enable";
+                toggleButton.addEventListener("click", () => togglePackage(item.id));
+
+                const deleteButton = document.createElement("button");
+                deleteButton.className = "delete";
+                deleteButton.textContent = "Delete";
+                deleteButton.addEventListener("click", () => deletePackage(item.id));
+
+                actions.append(editButton, toggleButton, deleteButton);
+                actionsCell.appendChild(actions);
+            });
+        }
+
+        function resetForm() {
+            form.reset();
+            editingId = null;
+            document.getElementById("formTitle").textContent = "Add a New Package";
+            saveButton.textContent = "Add Package";
+            cancelButton.hidden = true;
+            message.textContent = "";
+        }
+
+        function editPackage(id) {
+            const item = packages.find(pkg => pkg.id === id);
+            if (!item) return;
+
+            editingId = id;
+            nameInput.value = item.name;
+            priceInput.value = item.price;
+            typeInput.value = item.type;
+            statusInput.value = item.status;
+
+            document.getElementById("formTitle").textContent = "Edit Package";
+            saveButton.textContent = "Save Changes";
+            cancelButton.hidden = false;
+            message.textContent = "";
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function togglePackage(id) {
+            const item = packages.find(pkg => pkg.id === id);
+            if (!item) return;
+
+            item.status = item.status === "Enabled" ? "Disabled" : "Enabled";
+
+            if (savePackages()) {
+                renderPackages();
+                message.style.color = "#166534";
+                message.textContent = "Package availability updated in this browser.";
+            }
+        }
+
+        function deletePackage(id) {
+            const item = packages.find(pkg => pkg.id === id);
+            if (!item) return;
+
+            if (!confirm("Delete the package '" + item.name + "'?")) return;
+
+            const previousPackages = packages;
+            packages = packages.filter(pkg => pkg.id !== id);
+
+            if (savePackages()) {
+                renderPackages();
+                message.style.color = "#166534";
+                message.textContent = "Package deleted from this browser's saved list.";
+            } else {
+                packages = previousPackages;
+                renderPackages();
+            }
+        }
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = nameInput.value.trim();
+            const price = Number(priceInput.value);
+
+            if (!name || !Number.isFinite(price) || price <= 0) {
+                message.style.color = "#B91C1C";
+                message.textContent = "Enter a package name and a valid price greater than zero.";
+                return;
+            }
+
+            const previousPackages = packages.map(item => ({ ...item }));
+
+            if (editingId !== null) {
+                const item = packages.find(pkg => pkg.id === editingId);
+                if (!item) return;
+
+                item.name = name;
+                item.price = price;
+                item.type = typeInput.value;
+                item.status = statusInput.value;
+            } else {
+                packages.push({
+                    id: Date.now(),
+                    name,
+                    price,
+                    type: typeInput.value,
+                    status: statusInput.value
+                });
+            }
+
+            if (!savePackages()) {
+                packages = previousPackages;
+                renderPackages();
+                return;
+            }
+
+            renderPackages();
+            resetForm();
+            message.style.color = "#166534";
+            message.textContent = "Package saved in this browser successfully.";
+        });
+
+        cancelButton.addEventListener("click", resetForm);
+
+        renderPackages();
+    </script>
+</body>
+</html>
+```

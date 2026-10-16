@@ -1,0 +1,541 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voucher Management | WiFi Bliss</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #F8F7FC;
+            color: #172554;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 22px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        header h2 span {
+            color: #F472B6;
+        }
+
+        header a {
+            color: #F9A8D4;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #64748B;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #E9E5F2;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px #17255408;
+        }
+
+        .card h2 {
+            font-size: 19px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #CBD5E1;
+            border-radius: 9px;
+            background: white;
+            color: #172554;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            outline: 2px solid #C4B5FD;
+            border-color: #7C3AED;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+        }
+
+        button {
+            padding: 11px 15px;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .primary {
+            color: white;
+            background: linear-gradient(135deg, #7C3AED, #F472B6);
+        }
+
+        .secondary {
+            color: #5B21B6;
+            background: #EDE9FE;
+        }
+
+        .danger {
+            color: #991B1B;
+            background: #FEE2E2;
+        }
+
+        .success {
+            color: #166534;
+            background: #DCFCE7;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .summary-item {
+            background: white;
+            border: 1px solid #E9E5F2;
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .summary-item p {
+            color: #64748B;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .summary-item strong {
+            font-size: 25px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #E9E5F2;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        th {
+            color: #64748B;
+            background: #FAF9FC;
+        }
+
+        .code {
+            font-family: monospace;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .status {
+            display: inline-block;
+            border-radius: 20px;
+            padding: 6px 9px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .unused {
+            color: #166534;
+            background: #DCFCE7;
+        }
+
+        .redeemed {
+            color: #5B21B6;
+            background: #EDE9FE;
+        }
+
+        .disabled {
+            color: #991B1B;
+            background: #FEE2E2;
+        }
+
+        .actions {
+            display: flex;
+            gap: 7px;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .notice {
+            margin-top: 15px;
+            color: #64748B;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #94A3B8;
+            font-size: 12px;
+        }
+
+        @media (max-width: 650px) {
+            .form-grid, .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+            .heading h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h2>WiFi <span>Bliss</span></h2>
+        <a href="dashboard.html">← Back to Dashboard</a>
+    </header>
+
+    <main>
+        <section class="heading">
+            <h1>Voucher Management 🎟️</h1>
+            <p>Create and manage Wi-Fi voucher codes for your customers.</p>
+        </section>
+
+        <section class="summary">
+            <div class="summary-item">
+                <p>Total Vouchers</p>
+                <strong id="totalCount">0</strong>
+            </div>
+
+            <div class="summary-item">
+                <p>Unused Vouchers</p>
+                <strong id="unusedCount">0</strong>
+            </div>
+
+            <div class="summary-item">
+                <p>Redeemed Vouchers</p>
+                <strong id="redeemedCount">0</strong>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Generate New Voucher</h2>
+
+            <form id="voucherForm">
+                <div class="form-grid">
+                    <div>
+                        <label for="packageName">Wi-Fi Package</label>
+                        <select id="packageName" required>
+                            <option value="30 Minutes">30 Minutes</option>
+                            <option value="1 Hour">1 Hour</option>
+                            <option value="3 Hours">3 Hours</option>
+                            <option value="6 Hours">6 Hours</option>
+                            <option value="12 Hours">12 Hours</option>
+                            <option value="24 Hours">24 Hours</option>
+                            <option value="3 Days">3 Days</option>
+                            <option value="7 Days">7 Days</option>
+                            <option value="14 Days">14 Days</option>
+                            <option value="30 Days">30 Days</option>
+                            <option value="100 MB">100 MB</option>
+                            <option value="250 MB">250 MB</option>
+                            <option value="500 MB">500 MB</option>
+                            <option value="1 GB">1 GB</option>
+                            <option value="2 GB">2 GB</option>
+                            <option value="3 GB">3 GB</option>
+                            <option value="5 GB">5 GB</option>
+                            <option value="10 GB">10 GB</option>
+                            <option value="20 GB">20 GB</option>
+                            <option value="50 GB">50 GB</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="voucherQuantity">Number of Vouchers</label>
+                        <input type="number" id="voucherQuantity"
+                               min="1" max="100" value="1" required>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" class="primary">
+                        Generate Vouchers
+                    </button>
+                </div>
+
+                <p id="message" role="status" aria-live="polite"></p>
+
+                <p class="notice">
+                    Demo mode: codes are stored in this browser only.
+                    They are not yet linked to real payments, the customer
+                    redemption page, or your Wi-Fi network.
+                </p>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>Voucher Records</h2>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Voucher Code</th>
+                            <th>Package</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="voucherTable"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>© 2026 WiFi Bliss · Voucher Management</footer>
+
+    <script>
+        const storageKey = "wifiBlissAdminVouchers";
+
+        let vouchers = loadVouchers();
+
+        const form = document.getElementById("voucherForm");
+        const packageInput = document.getElementById("packageName");
+        const quantityInput = document.getElementById("voucherQuantity");
+        const table = document.getElementById("voucherTable");
+        const message = document.getElementById("message");
+
+        function loadVouchers() {
+            try {
+                const saved = localStorage.getItem(storageKey);
+                return saved === null ? [] : JSON.parse(saved);
+            } catch {
+                return [];
+            }
+        }
+
+        function saveVouchers() {
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(vouchers));
+                return true;
+            } catch {
+                message.style.color = "#B91C1C";
+                message.textContent =
+                    "Could not save vouchers in this browser.";
+                return false;
+            }
+        }
+
+        function createCode() {
+            const characters = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+            let code;
+
+            do {
+                let part = "";
+
+                for (let i = 0; i < 4; i++) {
+                    part += characters[
+                        Math.floor(Math.random() * characters.length)
+                    ];
+                }
+
+                code = "WIFI-" + part + "-" + Date.now().toString(36).slice(-4).toUpperCase();
+            } while (vouchers.some(v => v.code === code));
+
+            return code;
+        }
+
+        function renderVouchers() {
+            table.replaceChildren();
+
+            if (vouchers.length === 0) {
+                const row = table.insertRow();
+                const cell = row.insertCell();
+                cell.colSpan = 5;
+                cell.textContent = "No vouchers created yet.";
+            }
+
+            vouchers.forEach(voucher => {
+                const row = table.insertRow();
+
+                const codeCell = row.insertCell();
+                const code = document.createElement("span");
+                code.className = "code";
+                code.textContent = voucher.code;
+                codeCell.appendChild(code);
+
+                row.insertCell().textContent = voucher.packageName;
+
+                const statusCell = row.insertCell();
+                const badge = document.createElement("span");
+                badge.className = "status " + voucher.status.toLowerCase();
+                badge.textContent = voucher.status;
+                statusCell.appendChild(badge);
+
+                row.insertCell().textContent = voucher.createdAt;
+
+                const actionsCell = row.insertCell();
+                const actions = document.createElement("div");
+                actions.className = "actions";
+
+                const copyButton = document.createElement("button");
+                copyButton.className = "secondary";
+                copyButton.textContent = "Copy";
+                copyButton.addEventListener("click", () => copyCode(voucher.code));
+
+                const toggleButton = document.createElement("button");
+                toggleButton.className =
+                    voucher.status === "Disabled" ? "success" : "danger";
+                toggleButton.textContent =
+                    voucher.status === "Disabled" ? "Enable" : "Disable";
+                toggleButton.disabled = voucher.status === "Redeemed";
+                toggleButton.addEventListener("click", () => toggleVoucher(voucher.id));
+
+                actions.append(copyButton, toggleButton);
+                actionsCell.appendChild(actions);
+            });
+
+            document.getElementById("totalCount").textContent = vouchers.length;
+            document.getElementById("unusedCount").textContent =
+                vouchers.filter(v => v.status === "Unused").length;
+            document.getElementById("redeemedCount").textContent =
+                vouchers.filter(v => v.status === "Redeemed").length;
+        }
+
+        async function copyCode(code) {
+            try {
+                await navigator.clipboard.writeText(code);
+                message.style.color = "#166534";
+                message.textContent = "Voucher code copied.";
+            } catch {
+                message.style.color = "#92400E";
+                message.textContent =
+                    "Copy is unavailable here. Select and copy the code manually: " + code;
+            }
+        }
+
+        function toggleVoucher(id) {
+            const voucher = vouchers.find(v => v.id === id);
+            if (!voucher || voucher.status === "Redeemed") return;
+
+            voucher.status = voucher.status === "Disabled" ? "Unused" : "Disabled";
+
+            if (saveVouchers()) {
+                renderVouchers();
+                message.style.color = "#166534";
+                message.textContent = "Voucher status updated in this browser.";
+            }
+        }
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const quantity = Number(quantityInput.value);
+
+            if (!Number.isInteger(quantity) || quantity < 1 || quantity > 100) {
+                message.style.color = "#B91C1C";
+                message.textContent = "Choose a quantity between 1 and 100.";
+                return;
+            }
+
+            const previous = vouchers.map(v => ({ ...v }));
+            const createdAt = new Date().toLocaleDateString();
+
+            for (let i = 0; i < quantity; i++) {
+                vouchers.push({
+                    id: Date.now() + "-" + i + "-" +
+                        Math.random().toString(36).slice(2, 7),
+                    code: createCode(),
+                    packageName: packageInput.value,
+                    status: "Unused",
+                    createdAt
+                });
+            }
+
+            if (!saveVouchers()) {
+                vouchers = previous;
+                renderVouchers();
+                return;
+            }
+
+            renderVouchers();
+
+            message.style.color = "#166534";
+            message.textContent =
+                quantity + " demo voucher(s) generated successfully.";
+
+            form.reset();
+            quantityInput.value = 1;
+        });
+
+        renderVouchers();
+    </script>
+</body>
+</html>
+```

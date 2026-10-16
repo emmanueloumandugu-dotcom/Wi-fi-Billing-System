@@ -1,0 +1,227 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#172554">
+
+    <title>Secure Payment | WiFi Bliss</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/script.js" defer></script>
+
+    <style>
+        .payment-area {
+            width: min(480px, 100%);
+            margin: auto;
+            padding: 45px 20px;
+        }
+
+        .payment-card {
+            padding: 28px;
+            border: 1px solid rgba(196, 181, 253, 0.35);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+
+        .payment-label {
+            color: #F472B6;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+        }
+
+        .payment-summary {
+            margin: 24px 0;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+        }
+
+        .payment-summary h2 {
+            margin: 8px 0;
+            color: #FFFFFF;
+        }
+
+        .payment-amount {
+            color: #F472B6;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .payment-form label {
+            display: block;
+            margin: 18px 0 8px;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        .payment-form input {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #A78BFA;
+            border-radius: 12px;
+            background: #FFFFFF;
+            color: #172554;
+            font: inherit;
+            outline: none;
+        }
+
+        .payment-form input:focus {
+            border-color: #F472B6;
+            box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.2);
+        }
+
+        .payment-form button {
+            width: 100%;
+            margin-top: 22px;
+            cursor: pointer;
+        }
+
+        .payment-message {
+            margin-top: 18px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .payment-note {
+            margin-top: 20px;
+            color: #D1D5DB;
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="../index.html" class="brand">
+        <span class="brand-icon">⌁</span>
+        <span>WiFi<span class="brand-accent">Bliss</span></span>
+    </a>
+
+    <a href="packages.html" class="login-link">Back to Packages</a>
+</header>
+
+<main class="hero">
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+
+    <section class="payment-area">
+
+        <p class="eyebrow">FAST. SIMPLE. SECURE.</p>
+
+        <h1>
+            Complete Your
+            <span class="gradient-text">Payment.</span>
+        </h1>
+
+        <p class="hero-description">
+            Review your selected Wi-Fi package before proceeding.
+        </p>
+
+        <div class="payment-card">
+
+            <p class="payment-label">YOUR SELECTED PACKAGE</p>
+
+            <div class="payment-summary">
+                <p id="selected-type">Wi-Fi package</p>
+                <h2 id="selected-package">No package selected</h2>
+                <p class="payment-amount" id="selected-price">KSh 0</p>
+            </div>
+
+            <form class="payment-form" id="payment-form">
+                <label for="mpesa-phone">M-Pesa phone number</label>
+
+                <input
+                    type="tel"
+                    id="mpesa-phone"
+                    name="phone"
+                    placeholder="07XX XXX XXX"
+                    autocomplete="tel"
+                    inputmode="tel"
+                    required
+                >
+
+                <button type="submit" class="btn btn-primary">
+                    Pay with M-Pesa →
+                </button>
+            </form>
+
+            <p id="payment-message"
+               class="payment-message"
+               role="status"
+               aria-live="polite"></p>
+
+            <p class="payment-note">
+                When live payments are connected, submitting your
+                number will request an M-Pesa STK Push. You will
+                enter your M-Pesa PIN on your phone.
+                Never share your PIN on this website.
+            </p>
+
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <p>Made for better connections <span>♥</span></p>
+</footer>
+
+<script>
+    const selectedPackage = sessionStorage.getItem("selectedPackage");
+    const selectedPrice = sessionStorage.getItem("selectedPrice");
+    const selectedType = sessionStorage.getItem("selectedPackageType");
+
+    const packageElement = document.getElementById("selected-package");
+    const priceElement = document.getElementById("selected-price");
+    const typeElement = document.getElementById("selected-type");
+    const messageElement = document.getElementById("payment-message");
+    const form = document.getElementById("payment-form");
+
+    if (selectedPackage && selectedPrice !== null) {
+        packageElement.textContent = selectedPackage;
+        priceElement.textContent = "KSh " + selectedPrice;
+
+        typeElement.textContent =
+            selectedType === "data" ? "Data-based plan" :
+            selectedType === "time" ? "Time-based plan" :
+            "Wi-Fi package";
+    } else {
+        packageElement.textContent = "No package selected";
+        priceElement.textContent = "KSh 0";
+        typeElement.textContent = "Please select a package first";
+
+        messageElement.textContent =
+            "Please go back to Packages and choose a plan before paying.";
+
+        form.querySelector("button").disabled = true;
+    }
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const phone = document.getElementById("mpesa-phone").value.trim();
+        const validPhone = /^(?:07|01)\d{8}$/.test(phone);
+
+        if (!validPhone) {
+            messageElement.textContent =
+                "Enter a valid Kenyan number, for example 0712345678.";
+            return;
+        }
+
+        messageElement.textContent =
+            "Your number has been entered. Live M-Pesa payments are not connected yet, so no STK Push has been sent.";
+    });
+</script>
+
+</body>
+</html>
+```U
